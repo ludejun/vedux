@@ -1,0 +1,19 @@
+{
+  "globals": {
+    "__DEV__": true,
+    "__WECHAT__": true,
+    "App": true,
+    "Page": true,
+    "Component": true,
+    "wx": true,
+    "my": true,
+    "getApp": true
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.babel.js"
+      }
+    }
+  }
+}
