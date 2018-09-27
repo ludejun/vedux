@@ -9,7 +9,7 @@ Thumbs.db
 *.log
 node_modules
 dist
-lib
+libs
 *.zip
 package-lock.json
 yarn.lock
