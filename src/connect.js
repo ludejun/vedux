@@ -119,4 +119,4 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
 };
 
 connect.onShowCallback = onShowCallback;
-module.exports = connect;
+export default connect;

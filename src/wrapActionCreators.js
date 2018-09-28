@@ -29,4 +29,4 @@ const wrapActionCreators =
     dispatch =>
       bindActionCreators(actionCreators, dispatch);
 
-module.exports = wrapActionCreators;
+export default wrapActionCreators;

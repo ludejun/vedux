@@ -1,4 +1,4 @@
 {
 	"presets": ["@babel/env"], // "@babel/preset-env"
-	"plugins": ["@babel/transform-runtime"] // same as "@babel/plugin-transform-arrow-functions"
+	"plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-export-default-from"] // same as "@babel/plugin-transform-arrow-functions"
 }

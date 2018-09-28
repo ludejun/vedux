@@ -22,4 +22,4 @@ const Provider = (store) => {
   return AppConfig;
 };
 
-module.exports = Provider;
+export default Provider;

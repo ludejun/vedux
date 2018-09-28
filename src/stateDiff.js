@@ -29,4 +29,4 @@ const stateDiff = (nextState, state) => {
   return patch;
 };
 
-module.exports = stateDiff;
+export default stateDiff;

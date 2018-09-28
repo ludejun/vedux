@@ -5,7 +5,9 @@ module.exports = {
 	entry: './src/index',
 	output: {
 		path: path.resolve(__dirname, 'libs'),
-		filename: 'vedux.min.js'
+		filename: 'vedux.min.js',
+		// library: '@wmfe/',
+		libraryTarget: 'umd'
 	},
 	module: {
 		rules: [

@@ -20,4 +20,4 @@ const warning = (message) => {
   /* eslint-enable no-empty */
 };
 
-module.exports = warning;
+export default warning;
