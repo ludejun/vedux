@@ -1,6 +1,7 @@
 import stateDiff from './stateDiff';
 import warning from './warning';
 import wrapActionCreators from './wrapActionCreators';
+import { throttleWrapper } from './utils';
 
 const getCurrentPage = () => {
   const pageStack = getCurrentPages();
@@ -52,9 +53,10 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
       if (!patch) {
         return;
       }
-      this.__state = mappedState;
-      // only pass in updated data to .setData()
-      this.setData(patch);
+
+      throttleWrapper(this, patch, state, () => {
+        this.__state = mappedState;
+      });
     };
 
     const {
@@ -105,7 +107,7 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
     const config = Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {
       onLoad,
       onUnload,
-			onShow,
+      onShow,
     });
 
     // // 如果connect先于base.js继承，直接重写onShow
