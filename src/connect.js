@@ -19,15 +19,23 @@ const onShowCallback = function onShowCallback() {
   }
 };
 
+const defaultMergeProps = state => state;
 const defaultMapStateToProps = state => ({}); // eslint-disable-line no-unused-vars
 const defaultMapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const connect = (mapStateToProps, mapDispatchToProps) => {
+const connect = (
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps = defaultMergeProps,
+  extraOptions = {},
+) => {
   const shouldSubscribe = Boolean(mapStateToProps);
   const mapState = mapStateToProps || defaultMapStateToProps;
   const app = getApp();
+  mergeProps = mergeProps || defaultMergeProps;
+  extraOptions = extraOptions || {};
 
   let mapDispatch;
   if (typeof mapDispatchToProps === 'function') {
@@ -39,22 +47,31 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
   }
 
   const wrapWithConnect = (pageConfig) => {
-    const handleChange = function (options) {
+    const handleChange = function (options = {}) {
       if (!this.unsubscribe) {
         return;
       }
 
-      const state = this.store.getState();
-      const mappedState = mapState(state, options);
       const {
         __state,
+        store: {
+          getState,
+        },
       } = this;
-      const patch = stateDiff(mappedState, __state);
+      const state = getState();
+      const mappedState = mapState(state, options);
+      options = Object.assign({}, options || {}, extraOptions);
+      const mergedMappedState = Object.assign(
+        mappedState,
+        mergeProps(mappedState, this, options) || {},
+      );
+      const patch = stateDiff(mergedMappedState, __state);
+
       if (!patch) {
         return;
       }
 
-      this.__state = mappedState;
+      this.__state = mergedMappedState;
       throttleWrapper(this, patch, state);
     };
 
