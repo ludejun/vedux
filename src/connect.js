@@ -54,9 +54,8 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
         return;
       }
 
-      throttleWrapper(this, patch, state, () => {
-        this.__state = mappedState;
-      });
+      this.__state = mappedState;
+      throttleWrapper(this, patch, state);
     };
 
     const {
@@ -97,23 +96,20 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
       }
     };
 
-    const onShow = function onShow() {
-      onShowCallback.call(this);
-      if (typeof _onShow === 'function') {
-        _onShow.call(this);
-      }
+    const onShowWrapper = function (onshow) {
+      return function onShow(...args) {
+        onShowCallback.call(this);
+        if (typeof onshow === 'function') {
+          onshow.apply(this, args);
+        }
+      };
     };
 
     const config = Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {
       onLoad,
       onUnload,
-      onShow,
+      onShow: onShowWrapper(_onShow),
     });
-
-    // // 如果connect先于base.js继承，直接重写onShow
-    // if (config.pageName && !('pageHidden' in config)) {
-    //   config.onShow = onShow;
-    // }
     return config;
   };
 

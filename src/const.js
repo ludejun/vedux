@@ -1,7 +1,13 @@
+export const VEDUX_PATCH = '__veduxPatch__';
+export const VEDUX_CB = '__veduxCallback__';
+export const VEDUX_LAZY = 'lazy';
+export const VEDUX_OPTS = '__veduxOptions__';
+export const VEDUX_THROTTLE = '__veduxThrottle__';
+
 export default {
-  VEDUX_PATCH: '__veduxPatch__',
-  VEDUX_CB: '__veduxCallback__',
-  VEDUX_LAZY: 'lazy',
-  VEDUX_OPTS: '__veduxOptions__',
-  VEDUX_THROTTLE: '__veduxThrottle__',
-}
+  VEDUX_PATCH,
+  VEDUX_CB,
+  VEDUX_LAZY,
+  VEDUX_OPTS,
+  VEDUX_THROTTLE,
+};

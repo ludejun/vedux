@@ -1,12 +1,11 @@
-import CONST from './const';
-
-const {
+import {
   VEDUX_CB,
   VEDUX_LAZY,
   VEDUX_OPTS,
   VEDUX_PATCH,
   VEDUX_THROTTLE,
-} = CONST;
+} from './const';
+
 const defaultThrottleConfig = {
   delay: 100,
 };
@@ -27,7 +26,7 @@ const resetValue = (
 const veduxCallbackWrapper = (cbQ) => {
   let result = null;
   if (cbQ && cbQ.length) {
-    return data => cbQ.forEach(cb => cb(data));
+    return data => cbQ.forEach(cb => isFunc(cb) && cb(data));
   }
   return result;
 };
@@ -103,18 +102,15 @@ const throttle = (
   options = {},
 ) => {
   const {
-    connectCallback,
     config,
   } = options;
-  page[VEDUX_PATCH] = patch;
+  page[VEDUX_PATCH] = Object.assign(page[VEDUX_PATCH] || {}, patch);
 
   if (!page[VEDUX_THROTTLE]) {
     page[VEDUX_THROTTLE] = setTimeout(() => {
-      connectCallback();
       page.setData(page[VEDUX_PATCH], callback);
-      resetValue(page, VEDUX_PATCH);
+      resetValue(page, VEDUX_PATCH, {});
       resetValue(page, VEDUX_THROTTLE);
-      console.log('delay 100');
     }, config.delay);
   }
 };
@@ -123,7 +119,6 @@ export const throttleWrapper = (
   page = this,
   patch,
   state,
-  connectCallback,
   config = defaultThrottleConfig,
 ) => {
   const {
@@ -133,14 +128,13 @@ export const throttleWrapper = (
   } = getVeduxProps(state);
 
   if (lazy) {
-    return throttle(page, patch, callback, {
+    throttle(page, patch, callback, {
       ...options,
-      connectCallback,
       config,
     });
+  } else {
+    page.setData(patch, callback);
   }
-  connectCallback();
-  page.setData(patch, callback);
 };
 
 export default {
