@@ -1,6 +1,7 @@
 import stateDiff from './stateDiff';
 import warning from './warning';
 import wrapActionCreators from './wrapActionCreators';
+import { throttleWrapper, isFunc } from './utils';
 
 const getCurrentPage = () => {
   const pageStack = getCurrentPages();
@@ -12,7 +13,7 @@ const getCurrentPage = () => {
 
 const onShowCallback = function onShowCallback() {
   const { onShowUpdate } = this;
-  if (typeof onShowUpdate === 'function') {
+  if (isFunc(onShowUpdate)) {
     onShowUpdate();
     this.onShowUpdate = null;
   }
@@ -23,13 +24,18 @@ const defaultMapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const connect = (mapStateToProps, mapDispatchToProps) => {
+const connect = (
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+  extraOptions,
+) => {
   const shouldSubscribe = Boolean(mapStateToProps);
   const mapState = mapStateToProps || defaultMapStateToProps;
   const app = getApp();
 
   let mapDispatch;
-  if (typeof mapDispatchToProps === 'function') {
+  if (isFunc(mapDispatchToProps)) {
     mapDispatch = mapDispatchToProps;
   } else if (!mapDispatchToProps) {
     mapDispatch = defaultMapDispatchToProps;
@@ -38,23 +44,39 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
   }
 
   const wrapWithConnect = (pageConfig) => {
-    const handleChange = function (options) {
+    const handleChange = function (options = {}) {
       if (!this.unsubscribe) {
         return;
       }
 
-      const state = this.store.getState();
-      const mappedState = mapState(state, options);
       const {
         __state,
+        store: {
+          getState,
+        },
       } = this;
+      const state = getState();
+      let mappedState = mapState(state, options);
+
+      if (typeof extraOptions === 'object') {
+        options = Object.assign({}, options || {}, extraOptions);
+      }
+
+      if (isFunc(mergeProps)) {
+        mappedState = Object.assign(
+          mappedState,
+          mergeProps(mappedState, this, options) || {},
+        );
+      }
+
       const patch = stateDiff(mappedState, __state);
+
       if (!patch) {
         return;
       }
+
       this.__state = mappedState;
-      // only pass in updated data to .setData()
-      this.setData(patch);
+      throttleWrapper(this, patch, state);
     };
 
     const {
@@ -79,39 +101,36 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
         });
         handleChange.call(this, options);
       }
-      if (typeof _onLoad === 'function') {
+      if (isFunc(_onLoad)) {
         _onLoad.call(this, options);
       }
     };
 
     const onUnload = function () {
-      if (typeof this.unsubscribe === 'function') {
+      if (isFunc(this.unsubscribe)) {
         this.unsubscribe();
       }
       // should no long receive state changes after .onUnload()
       this.unsubscribe = null;
-      if (typeof _onUnload === 'function') {
+      if (isFunc(_onUnload)) {
         _onUnload.call(this);
       }
     };
 
-    const onShow = function onShow() {
-      onShowCallback.call(this);
-      if (typeof _onShow === 'function') {
-        _onShow.call(this);
-      }
+    const onShowWrapper = function (onshow) {
+      return function onShow(...args) {
+        onShowCallback.call(this);
+        if (isFunc(onshow)) {
+          onshow.apply(this, args);
+        }
+      };
     };
 
     const config = Object.assign({}, pageConfig, mapDispatch(app.store.dispatch), {
       onLoad,
       onUnload,
-			onShow,
+      onShow: onShowWrapper(_onShow),
     });
-
-    // // 如果connect先于base.js继承，直接重写onShow
-    // if (config.pageName && !('pageHidden' in config)) {
-    //   config.onShow = onShow;
-    // }
     return config;
   };
 
