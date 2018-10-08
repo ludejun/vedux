@@ -10,10 +10,10 @@ const defaultThrottleConfig = {
   delay: 100,
 };
 
-const isArray = Array.isArray;
-const hasOwn = (object = {}, key) => object.hasOwnProperty && object.hasOwnProperty(key);
-const isBool = bool => typeof bool === 'boolean' || bool instanceof Boolean;
-const isFunc = func => typeof func === 'function';
+export const isArray = Array.isArray;
+export const hasOwn = (object = {}, key) => object.hasOwnProperty && object.hasOwnProperty(key);
+export const isBool = bool => typeof bool === 'boolean' || bool instanceof Boolean;
+export const isFunc = func => typeof func === 'function';
 
 const resetValue = (
   object,

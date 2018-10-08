@@ -1,7 +1,7 @@
 import stateDiff from './stateDiff';
 import warning from './warning';
 import wrapActionCreators from './wrapActionCreators';
-import { throttleWrapper } from './utils';
+import { throttleWrapper, isFunc } from './utils';
 
 const getCurrentPage = () => {
   const pageStack = getCurrentPages();
@@ -13,13 +13,12 @@ const getCurrentPage = () => {
 
 const onShowCallback = function onShowCallback() {
   const { onShowUpdate } = this;
-  if (typeof onShowUpdate === 'function') {
+  if (isFunc(onShowUpdate)) {
     onShowUpdate();
     this.onShowUpdate = null;
   }
 };
 
-const defaultMergeProps = state => state;
 const defaultMapStateToProps = state => ({}); // eslint-disable-line no-unused-vars
 const defaultMapDispatchToProps = dispatch => ({
   dispatch,
@@ -28,17 +27,15 @@ const defaultMapDispatchToProps = dispatch => ({
 const connect = (
   mapStateToProps,
   mapDispatchToProps,
-  mergeProps = defaultMergeProps,
-  extraOptions = {},
+  mergeProps,
+  extraOptions,
 ) => {
   const shouldSubscribe = Boolean(mapStateToProps);
   const mapState = mapStateToProps || defaultMapStateToProps;
   const app = getApp();
-  mergeProps = mergeProps || defaultMergeProps;
-  extraOptions = extraOptions || {};
 
   let mapDispatch;
-  if (typeof mapDispatchToProps === 'function') {
+  if (isFunc(mapDispatchToProps)) {
     mapDispatch = mapDispatchToProps;
   } else if (!mapDispatchToProps) {
     mapDispatch = defaultMapDispatchToProps;
@@ -59,19 +56,26 @@ const connect = (
         },
       } = this;
       const state = getState();
-      const mappedState = mapState(state, options);
-      options = Object.assign({}, options || {}, extraOptions);
-      const mergedMappedState = Object.assign(
-        mappedState,
-        mergeProps(mappedState, this, options) || {},
-      );
-      const patch = stateDiff(mergedMappedState, __state);
+      let mappedState = mapState(state, options);
+
+      if (typeof extraOptions === 'object') {
+        options = Object.assign({}, options || {}, extraOptions);
+      }
+
+      if (isFunc(mergeProps)) {
+        mappedState = Object.assign(
+          mappedState,
+          mergeProps(mappedState, this, options) || {},
+        );
+      }
+
+      const patch = stateDiff(mappedState, __state);
 
       if (!patch) {
         return;
       }
 
-      this.__state = mergedMappedState;
+      this.__state = mappedState;
       throttleWrapper(this, patch, state);
     };
 
