@@ -101,18 +101,18 @@ const connect = (
         });
         handleChange.call(this, options);
       }
-      if (typeof _onLoad === 'function') {
+      if (isFunc(_onLoad)) {
         _onLoad.call(this, options);
       }
     };
 
     const onUnload = function () {
-      if (typeof this.unsubscribe === 'function') {
+      if (isFunc(this.unsubscribe)) {
         this.unsubscribe();
       }
       // should no long receive state changes after .onUnload()
       this.unsubscribe = null;
-      if (typeof _onUnload === 'function') {
+      if (isFunc(_onUnload)) {
         _onUnload.call(this);
       }
     };
@@ -120,7 +120,7 @@ const connect = (
     const onShowWrapper = function (onshow) {
       return function onShow(...args) {
         onShowCallback.call(this);
-        if (typeof onshow === 'function') {
+        if (isFunc(onshow)) {
           onshow.apply(this, args);
         }
       };
