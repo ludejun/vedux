@@ -75,10 +75,6 @@ const connect = (
         return;
       }
 
-      if (options.force) {
-        state.lazy = false;
-      }
-
       this.__state = mappedState;
       throttleWrapper(this, patch, state);
     };
@@ -103,8 +99,6 @@ const connect = (
             this.onShowUpdate = handleChange.bind(this, options);
           }
         });
-        // onLoad需要即时从state获取信息，故不做延时优化
-        options.force = true;
         handleChange.call(this, options);
       }
       if (isFunc(_onLoad)) {
