@@ -121,13 +121,14 @@ export const throttleWrapper = (
   state,
   config = defaultThrottleConfig,
 ) => {
+  config = Object.assign({}, defaultThrottleConfig, config);
   const {
     callback,
     options,
     lazy,
   } = getVeduxProps(state);
-
-  if (lazy) {
+  const useLazy = !config.force && lazy;
+  if (useLazy) {
     throttle(page, patch, callback, {
       ...options,
       config,
