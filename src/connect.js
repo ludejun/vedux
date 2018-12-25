@@ -76,7 +76,7 @@ const connect = (
       }
 
       this.__state = mappedState;
-      throttleWrapper(this, patch, state);
+      throttleWrapper(this, patch, state, options);
     };
 
     const {
@@ -99,7 +99,8 @@ const connect = (
             this.onShowUpdate = handleChange.bind(this, options);
           }
         });
-        handleChange.call(this, options);
+        // onLoad需要即时从state获取信息，故不做延时优化
+        handleChange.call(this, Object.assign({}, options, { force: true }));
       }
       if (isFunc(_onLoad)) {
         _onLoad.call(this, options);
