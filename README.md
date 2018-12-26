@@ -1,10 +1,25 @@
 # vedux
 
-## 简介
+wxapp-redux 微信小程序和redux绑定库，类react-redux
 
-## 使用方式
 
-### app.js
+
+### 简介
+
+在[**wechat-weapp-redux**](https://github.com/charleyw/wechat-weapp-redux)的基础上改进，控制setdata次数与渲染次数，在页面的交互、加载、跳转时setdata次数减少50-80%，渲染时间减少约50%。
+
+有如下功能特性：
+
+- Redux store变化时禁止后台页面setdata，后台页面的setdata汇总到此页面onload时进行；
+- 优化stateDiff算法；
+- 
+
+
+
+### 使用方式
+
+app.js
+
 ```js
 import { Provider } from '@wmfe/vedux';
 import store from './store';
@@ -19,7 +34,8 @@ App(config);
 
 ```
 
-### actions/home.js
+actions/home.js
+
 ```js
 export const types = {
   HOME_FETCH_API: 'HOME_FETCH_API',
@@ -46,7 +62,8 @@ export function fetchAPI(payload, cb, options) {
 
 ```
 
-### reducers/home.js
+reducers/home.js
+
 ```js
 import { types } from '../actions/home';
 import { CONST } from '@wmfe/vedux';
@@ -74,7 +91,8 @@ export default function user(state = initialState, action = {}) {
 
 ```
 
-### pages/index/index.js
+pages/index/index.js
+
 ```js
 import { connect } from '@wmfe/vedux';
 import { fetchAPI } from '../../actions/home';
