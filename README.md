@@ -12,8 +12,12 @@ wxapp-redux 微信小程序和redux绑定库，类react-redux
 
 - Redux store变化时禁止后台页面setdata，后台页面的setdata汇总到此页面onload时进行；
 - 优化stateDiff算法；
-- 
-
+- 过滤与当前页面无关的变更；
+- 内部对action触发做节流处理，允许不节流，默认节流；
+- 支持给action传入callback，在action触发后执行；
+- connect的传参mapStateToData，支持传入options（即onLoad的options）；
+- connect新增参数mergeProps（对mapStateToData的返回结果做进一步处理）；
+- connect新增参数extraOptions（给mergeProps方法传参）；
 
 
 ### 使用方式
