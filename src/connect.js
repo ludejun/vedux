@@ -1,7 +1,7 @@
 import stateDiff from './stateDiff';
 import warning from './warning';
 import wrapActionCreators from './wrapActionCreators';
-import { throttleWrapper, isFunc } from './utils';
+import { debounceWrapper, isFunc } from './utils';
 
 const getCurrentPage = () => {
   const pageStack = getCurrentPages();
@@ -76,7 +76,7 @@ const connect = (
       }
 
       this.__state = mappedState;
-      throttleWrapper(this, patch, state, options);
+      debounceWrapper(this, patch, state, options);
     };
 
     const {

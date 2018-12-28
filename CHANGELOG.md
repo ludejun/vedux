@@ -11,3 +11,18 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * onLoad强制不走延时（需要设置初始数据）
+
+<a name="0.0.12"></a>
+# 0.0.12 (2018-12-27)
+
+### Features
+
+* 完善README.md
+
+<a name="0.0.13"></a>
+# 0.0.13 (2018-12-28)
+
+### Features
+
+* 命名修改：throttle => debounce
+* 部分参数初始值兜底
