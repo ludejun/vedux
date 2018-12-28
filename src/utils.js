@@ -3,10 +3,10 @@ import {
   VEDUX_LAZY,
   VEDUX_OPTS,
   VEDUX_PATCH,
-  VEDUX_THROTTLE,
+  VEDUX_DEBOUNCE,
 } from './const';
 
-const defaultThrottleConfig = {
+const defaultDebounceConfig = {
   delay: 100,
 };
 
@@ -32,7 +32,7 @@ const veduxCallbackWrapper = (cbQ) => {
 };
 
 const getVeduxCallback = (
-  state,
+  state = {},
   key = VEDUX_CB,
 ) => {
   let result = null;
@@ -54,7 +54,7 @@ const pushVeduxCallback = (
 };
 
 const getVeduxLazy = (
-  state,
+  state = {},
   key = VEDUX_LAZY,
 ) => (
   hasOwn(state, key) && isBool(state[key])
@@ -62,7 +62,7 @@ const getVeduxLazy = (
 );
 
 const getVeduxProps = (
-  state,
+  state = {},
   optionKey = VEDUX_OPTS,
 ) => {
   const callbackQ = [];
@@ -95,7 +95,7 @@ const getVeduxProps = (
   }
 };
 
-const throttle = (
+const debounce = (
   page,
   patch,
   callback,
@@ -106,22 +106,22 @@ const throttle = (
   } = options;
   page[VEDUX_PATCH] = Object.assign(page[VEDUX_PATCH] || {}, patch);
 
-  if (!page[VEDUX_THROTTLE]) {
-    page[VEDUX_THROTTLE] = setTimeout(() => {
+  if (!page[VEDUX_DEBOUNCE]) {
+    page[VEDUX_DEBOUNCE] = setTimeout(() => {
       page.setData(page[VEDUX_PATCH], callback);
       resetValue(page, VEDUX_PATCH, {});
-      resetValue(page, VEDUX_THROTTLE);
+      resetValue(page, VEDUX_DEBOUNCE);
     }, config.delay);
   }
 };
 
-export const throttleWrapper = (
+export const debounceWrapper = (
   page = this,
   patch,
-  state,
-  config = defaultThrottleConfig,
+  state = {},
+  config = defaultDebounceConfig,
 ) => {
-  config = Object.assign({}, defaultThrottleConfig, config);
+  config = Object.assign({}, defaultDebounceConfig, config);
   const {
     callback,
     options,
@@ -129,7 +129,7 @@ export const throttleWrapper = (
   } = getVeduxProps(state);
   const useLazy = !config.force && lazy;
   if (useLazy) {
-    throttle(page, patch, callback, {
+    debounce(page, patch, callback, {
       ...options,
       config,
     });
@@ -140,5 +140,5 @@ export const throttleWrapper = (
 
 export default {
   getVeduxProps,
-  throttleWrapper,
+  debounceWrapper,
 };
