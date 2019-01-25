@@ -26,3 +26,11 @@ All notable changes to this project will be documented in this file. See [standa
 
 * 命名修改：throttle => debounce
 * 部分参数初始值兜底
+
+<a name="0.0.15"></a>
+# 0.0.14 0.0.15 (2018-12-28)
+
+### Features
+
+* StateDiff判断是否相等函数化，并对es6新数据类型进行规避，减少纯使用JSON.stringify对特殊情况判断不出bug
+* README中增加禁止store使用Set、Map、WeakSet、WeakMap、Symbol类型

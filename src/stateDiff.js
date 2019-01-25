@@ -1,3 +1,5 @@
+import { isEqual } from './utils';
+
 const hasOwn = Object.prototype.hasOwnProperty;
 
 const stateDiff = (nextState, state) => {
@@ -14,9 +16,11 @@ const stateDiff = (nextState, state) => {
     const key = keys[i];
     const val = nextState[key];
     // 更改diff算法原来比较object只通过恒等判断的逻辑
+		// 为了只是简单的JSON.stringify序列化就能简单判断是否相等，需排除state的属性为Set, WeakSet, Map, WeakMap, Symbol类型
+		// 但这并不能排除state的属性的属性含有这五种类型，因此禁止store中（特别是某一state的属性的属性中）含有这五种类型！！！
+
     // if (!hasOwn.call(state, key) || val !== state[key]) {
-    if (!hasOwn.call(state, key) ||
-      !(val === state[key] || JSON.stringify(val) === JSON.stringify(state[key]))) {
+    if (!hasOwn.call(state, key) || !isEqual(val, state[key])) {
       patch[key] = val;
       hasChanged = true;
     }

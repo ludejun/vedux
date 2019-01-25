@@ -20,6 +20,12 @@ wxapp-redux 微信小程序和redux绑定库，类react-redux
 - connect新增参数extraOptions（给mergeProps方法传参）；
 
 
+
+**注意：Store.getState()的属性值的属性值禁止为Set, WeakSet, Map, WeakMap, Symbol类型。**
+
+
+
+
 ### 使用方式
 
 app.js

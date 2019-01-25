@@ -14,6 +14,16 @@ export const isArray = Array.isArray;
 export const hasOwn = (object = {}, key) => object.hasOwnProperty && object.hasOwnProperty(key);
 export const isBool = bool => typeof bool === 'boolean' || bool instanceof Boolean;
 export const isFunc = func => typeof func === 'function';
+export const isEqual = (a, b) => {
+	if (a === b) return true;
+	if (typeof(a) === typeof(b) && a !== null && b !== null && a !== undefined && b !== undefined) {
+		if ([Set, WeakSet, Map, WeakMap, Symbol].indexOf(a.constructor) === -1 && [Set, WeakSet, Map, WeakMap, Symbol].indexOf(b.constructor) === -1
+			&& JSON.stringify(a) === JSON.stringify(b)) {
+			return true;
+		}
+	}
+	return false;
+}
 
 const resetValue = (
   object,
