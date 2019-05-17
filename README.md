@@ -2,6 +2,10 @@
 
 wxapp-redux 微信小程序和redux绑定库，类react-redux
 
+微信小程序 + vedux + redux + webpack 工程化脚手架参考 https://github.com/ludejun/wxapp-webpack
+
+- 每一个dispatch的action默认都为异步100ms执行，合理节流。当有某些操作后，有立即执行并且依赖前一个操作的，可以将此action变为同步执行，{lazy: false}，详见下方示例。
+- store中存储的state值，应保持为基础类型或object
 
 
 ### 简介
@@ -21,7 +25,7 @@ wxapp-redux 微信小程序和redux绑定库，类react-redux
 
 
 
-**注意：Store.getState()的属性值的属性值禁止为Set, WeakSet, Map, WeakMap, Symbol类型。**
+**注意：Store.getState()中某个状态的属性值禁止为Set, WeakSet, Map, WeakMap, Symbol类型。不然将分辨不出有state变化**
 
 
 
@@ -31,7 +35,7 @@ wxapp-redux 微信小程序和redux绑定库，类react-redux
 app.js
 
 ```js
-import { Provider } from '@wmfe/vedux';
+import { Provider } from 'vedux';
 import store from './store';
 
 const config = Provider(store)({
@@ -76,7 +80,7 @@ reducers/home.js
 
 ```js
 import { types } from '../actions/home';
-import { CONST } from '@wmfe/vedux';
+import { CONST } from 'vedux';
 
 const initialState = {
   motto: null,
@@ -104,7 +108,7 @@ export default function user(state = initialState, action = {}) {
 pages/index/index.js
 
 ```js
-import { connect } from '@wmfe/vedux';
+import { connect } from 'vedux';
 import { fetchAPI } from '../../actions/home';
 
 const pageConfig = {
@@ -183,12 +187,3 @@ Page(connect(
 )(pageConfig));
 
 ```
-
-
-## TODO
-  - setdata节流：每次需要setdata的data并不立即执行，而是做100ms的节流，合并可能的多次setdata再重新渲染
-  - setdata的callback吐出
-  - 可以允许不节流。默认节流
-  - 参考connect原方法的后面两个function，可以允许一个function做state的统一处理
-  - ...
-  - load(options) 在mapStateToData里的使用校验

@@ -1,6 +1,6 @@
 {
-  "name": "@wmfe/vedux",
-  "version": "0.0.15",
+  "name": "vedux",
+  "version": "0.1.2",
   "description": "Provide redux in weapp. Less count of setdata in weapp.",
   "main": "libs/vedux.min.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "files": [
     "libs"
   ],
-  "author": "ludejun@meituan.com",
+  "author": "ludejun@live.cn",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.1.0",
@@ -32,5 +32,9 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ludejun/vedux"
   }
 }
