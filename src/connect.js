@@ -24,15 +24,29 @@ const defaultMapDispatchToProps = dispatch => ({
   dispatch,
 });
 
+const isFrontPage = function (isR2X) {
+	try {
+		if (isR2X) {
+			const tempPath = this.$router.path.substr(0, 1) === '/' ? this.$router.path.slice(1) : this.$router.path;
+			return tempPath === getCurrentPage().route;
+		}
+		return this === getCurrentPage();
+	} catch (e) {
+		console.warn(e)
+		return true;
+	}
+}
+
 const connect = (
   mapStateToProps,
   mapDispatchToProps,
   mergeProps,
-  extraOptions,
+	extraOptions,
 ) => {
   const shouldSubscribe = Boolean(mapStateToProps);
   const mapState = mapStateToProps || defaultMapStateToProps;
-  const app = getApp();
+	const app = getApp();
+
 
   let mapDispatch;
   if (isFunc(mapDispatchToProps)) {
@@ -86,17 +100,17 @@ const connect = (
     } = pageConfig;
 
     const onLoad = function (options) {
-      this.store = app.store;
+      this.store = (extraOptions && extraOptions.store) || app.store;
       if (!this.store) {
         warning('Store对象不存在!');
       }
       if (shouldSubscribe) {
         this.__state = {};
         this.unsubscribe = this.store.subscribe(() => {
-          if (this === getCurrentPage()) {
-            handleChange.call(this, options);
+          if (isFrontPage.call(this, (extraOptions && extraOptions.isR2X))) {
+            handleChange.call(this, Object.assign({}, options, extraOptions || {}));
           } else {
-            this.onShowUpdate = handleChange.bind(this, options);
+            this.onShowUpdate = handleChange.bind(this, Object.assign({}, options, extraOptions || {}));
           }
         });
         // onLoad需要即时从state获取信息，故不做延时优化
