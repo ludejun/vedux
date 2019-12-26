@@ -1,0 +1,23 @@
+{
+  "name": "@wmfe/pocket-vedux",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "docz:dev": "docz dev",
+    "docz:build": "pocket-deploy -b",
+    "docz:serve": "docz serve",
+    "pub:test": "pocket-deploy -pb --env=test",
+    "pub:online": "pocket-deploy -pb --env=production"
+  },
+  "devDependencies": {
+    "@wmfe/pocket-deploy": "*",
+    "docz": "2.0.0-rc.40",
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
+  },
+  "dependencies": {
+    "@wmfe/gatsby-theme-pocket": "*",
+    "@wmfe/pocket-components": "*",
+    "axios": "^0.19.0"
+  }
+}

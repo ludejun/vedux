@@ -1,0 +1,232 @@
+{
+  "config": {
+    "title": "Pocket",
+    "description": "小程序平台化主站，汇聚优秀小程序项目",
+    "menu": [
+      {
+        "name": "Home",
+        "title": "首页",
+        "href": "http://pocket.sankuai.com/"
+      },
+      {
+        "name": "ProjectList",
+        "title": "项目列表页",
+        "href": "http://pocket.sankuai.com/project-list"
+      },
+      {
+        "name": "Docs",
+        "title": "接入文档",
+        "href": "http://pocket.sankuai.com/docs"
+      }
+    ],
+    "repository": null,
+    "native": false,
+    "themeConfig": {},
+    "separator": "/",
+    "src": "./doc/",
+    "base": "/vedux/",
+    "propsParser": false,
+    "debug": true,
+    "sidebar": [
+      {
+        "title": "vedux 概述",
+        "name": "Introduction",
+        "children": [
+          {
+            "title": "快速接入",
+            "name": "JoinUp"
+          },
+          {
+            "title": "API介绍",
+            "name": "API"
+          }
+        ]
+      },
+      {
+        "title": "高级使用",
+        "name": "Senior"
+      },
+      {
+        "title": "CHANGLOG",
+        "name": "CHANGLOG"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "key": "doc/doc/api/index.mdx",
+      "value": {
+        "name": "API",
+        "route": "/api",
+        "fullpage": false,
+        "id": "37b2f1d86210b972e85e82e36af53922",
+        "filepath": "doc/doc/api/index.mdx",
+        "fullpath": "/Users/ludejun/ludejun/vedux/docs/doc/api/index.mdx",
+        "link": "",
+        "slug": "doc/doc/api/index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "api",
+            "depth": 1,
+            "value": "API"
+          },
+          {
+            "slug": "1-connect",
+            "depth": 3,
+            "value": "1. connect"
+          },
+          {
+            "slug": "2-reducer",
+            "depth": 3,
+            "value": "2. reducer"
+          },
+          {
+            "slug": "3-provider",
+            "depth": 3,
+            "value": "3. Provider"
+          }
+        ]
+      }
+    },
+    {
+      "key": "doc/doc/changlog/index.mdx",
+      "value": {
+        "name": "CHANGLOG",
+        "route": "/changelog",
+        "fullpage": false,
+        "id": "a5417af95e77327689e669ea86a8ec79",
+        "filepath": "doc/doc/changlog/index.mdx",
+        "fullpath": "/Users/ludejun/ludejun/vedux/docs/doc/changlog/index.mdx",
+        "link": "",
+        "slug": "doc/doc/changlog/index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "changlog",
+            "depth": 1,
+            "value": "CHANGLOG"
+          }
+        ]
+      }
+    },
+    {
+      "key": "doc/doc/introduction/index.mdx",
+      "value": {
+        "name": "Introduction",
+        "route": "/",
+        "fullpage": false,
+        "id": "62213c8fc23f7d378f9eeac99c169947",
+        "filepath": "doc/doc/introduction/index.mdx",
+        "fullpath": "/Users/ludejun/ludejun/vedux/docs/doc/introduction/index.mdx",
+        "link": "",
+        "slug": "doc/doc/introduction/index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "vedux-概述",
+            "depth": 1,
+            "value": "vedux 概述"
+          },
+          {
+            "slug": "特性",
+            "depth": 2,
+            "value": "特性"
+          },
+          {
+            "slug": "联系我们",
+            "depth": 2,
+            "value": "联系我们"
+          }
+        ]
+      }
+    },
+    {
+      "key": "doc/doc/joinup/index.mdx",
+      "value": {
+        "name": "JoinUp",
+        "route": "/joinup",
+        "fullpage": false,
+        "id": "1d35fb6b809eee8a9ccbea0b9e323de9",
+        "filepath": "doc/doc/joinup/index.mdx",
+        "fullpath": "/Users/ludejun/ludejun/vedux/docs/doc/joinup/index.mdx",
+        "link": "",
+        "slug": "doc/doc/joinup/index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "快速接入",
+            "depth": 1,
+            "value": "快速接入"
+          },
+          {
+            "slug": "step-1：创建store，纯粹redux-api",
+            "depth": 2,
+            "value": "Step 1：创建store，纯粹redux API"
+          },
+          {
+            "slug": "step-2：app上绑定store",
+            "depth": 2,
+            "value": "Step 2：app上绑定store"
+          },
+          {
+            "slug": "step-3：在页面上绑定store，比如首页，写法和redux类似",
+            "depth": 2,
+            "value": "Step 3：在页面上绑定store，比如首页，写法和redux类似"
+          },
+          {
+            "slug": "step-4：创建redux数据流中的模版文件：action、reducer",
+            "depth": 2,
+            "value": "Step 4：创建redux数据流中的模版文件：action、reducer"
+          },
+          {
+            "slug": "最后",
+            "depth": 2,
+            "value": "最后"
+          }
+        ]
+      }
+    },
+    {
+      "key": "doc/doc/senior/index.mdx",
+      "value": {
+        "name": "Senior",
+        "route": "/senior",
+        "fullpage": false,
+        "id": "5c2fde2fc0d0f24d7960e61d702943e6",
+        "filepath": "doc/doc/senior/index.mdx",
+        "fullpath": "/Users/ludejun/ludejun/vedux/docs/doc/senior/index.mdx",
+        "link": "",
+        "slug": "doc/doc/senior/index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "高级使用",
+            "depth": 1,
+            "value": "高级使用"
+          },
+          {
+            "slug": "同步异步的setdata",
+            "depth": 2,
+            "value": "同步/异步的setdata"
+          },
+          {
+            "slug": "store导致setdata后的回调",
+            "depth": 2,
+            "value": "store导致setdata后的回调"
+          },
+          {
+            "slug": "connect后两个参数使用",
+            "depth": 2,
+            "value": "connect后两个参数使用"
+          },
+          {
+            "slug": "异步action，中间件使用",
+            "depth": 2,
+            "value": "异步action，中间件使用"
+          }
+        ]
+      }
+    }
+  ]
+}

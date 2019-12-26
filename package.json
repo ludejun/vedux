@@ -6,13 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.babel.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "docz:dev": "cd docs && yarn run docz:dev",
+    "docz:build": "cd docs && yarn run docz:build",
+    "docz:pub-test": "cd docs && yarn run pub:test",
+    "docz:pub-online": "cd docs && yarn run pub:online"
   },
-  "keywords": [
-    "weapp",
-    "redux",
-    "wechat-weapp-redux"
-  ],
+  "keywords": ["weapp", "redux", "wechat-weapp-redux"],
   "author": "ludejun@live.cn",
   "license": "MIT",
   "devDependencies": {
@@ -27,11 +27,6 @@
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ludejun/vedux"
-  }
+  "dependencies": { "@babel/polyfill": "^7.0.0" },
+  "repository": { "type": "git", "url": "https://github.com/ludejun/vedux" }
 }

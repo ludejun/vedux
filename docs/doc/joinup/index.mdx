@@ -1,0 +1,136 @@
+---
+name: JoinUp
+route: /joinup
+fullpage: false
+---
+
+import { PromptText } from '@wmfe/pocket-components/PromptText'
+
+# 快速接入
+
+```shell
+yarn add @wmfe/vedux
+```
+
+安装之后：
+
+## Step 1：创建store，纯粹redux API
+
+store.js
+```javascript
+const {
+  createStore,
+  // applyMiddleware,
+  // compose,
+} = require('redux');
+
+const reducer = require('./reducers'); // reducer聚合文件
+
+const store = createStore(
+  reducer,
+);
+
+module.exports = store;
+```
+
+## Step 2：app上绑定store
+
+app.js
+```javascript
+import { Provider } from 'vedux';
+import store from './store';
+
+const config = Provider(store)({
+  onLaunch() {
+    // TODO
+  },
+});
+
+App(config);
+```
+
+## Step 3：在页面上绑定store，比如首页，写法和redux类似
+
+pages/index/index.js
+```javascript
+import { connect } from 'vedux';
+import { fetchAPI } from '../../actions/home'; // 下面创建
+
+const pageConfig = {
+  data: {
+    motto: 'Hello World!',
+    userInfo: {},
+  },
+  onLoad() {
+    // 异步触发1次，最终态Hello Vedux!
+    this.fetchAPI({motto: 'Hello Vedux!'})
+  },
+};
+
+const mapStateToData = ({user, home}) => {
+  return {
+    userInfo: user.userInfo,
+    motto: home.motto,
+  };
+};
+
+const mapDispatchToPage = dispatch => ({
+  storeUserInfo: userInfo => {
+    dispatch(storeUserInfo(userInfo));
+  },
+  fetchAPI: (payload) => {
+    // action第二个参数是callback，当这次action引起data变更后触发
+    dispatch(fetchAPI(payload, () => {
+      // TODO
+    }))
+  },
+});
+
+Page(connect(
+  mapStateToData,
+  mapDispatchToPage,
+)(pageConfig));
+```
+
+## Step 4：创建redux数据流中的模版文件：action、reducer
+
+actions/home.js
+```js
+export const types = {
+  HOME_FETCH_API: 'HOME_FETCH_API',
+};
+
+export function fetchAPI(payload, cb, options) {
+  return {
+    type: types.HOME_FETCH_API,
+    payload,
+  };
+}
+```
+
+reducers/home.js
+```js
+import { types } from '../actions/home';
+
+const initialState = {
+  motto: null,
+};
+
+export default function user(state = initialState, action = {}) {
+  switch (action.type) {
+    case types.HOME_FETCH_API:
+      return {
+        ...state,
+        motto: action.payload.motto,
+      };
+
+    default:
+      return state;
+  }
+}
+```
+
+
+## 最后
+
+这样redux数据流就跑下来了，可以通过绑定在app上的store来控制全局状态的页面更新，通过mapStateToData可以将变化之后的state打到页面的data中，并自动让页面刷新。dispatch导致的页面data变化默认不是同步的。当然也有些场景，比如登录后，dispatch必须为同步可以参考后续API文档或者高阶使用文档。

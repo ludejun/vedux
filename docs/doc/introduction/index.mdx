@@ -1,0 +1,27 @@
+---
+name: Introduction
+route: /
+fullpage: false
+---
+
+import { Image } from '@wmfe/pocket-components/Image'
+
+# vedux 概述
+
+- vedux是微信小程序和redux绑定库，类react-redux。
+- 在[**wechat-weapp-redux**](https://github.com/charleyw/wechat-weapp-redux)的基础上改进而来，主要改进点有：改进stateDiff计算、setdata节流、store变化时禁止后台页面setdata、扩展connect高阶函数（类原生redux的connect参数）等方面。从外卖小程序的线上使用来看，控制setdata次数与渲染次数，在页面的交互、加载、跳转时setdata次数减少50-80%，渲染时间减少约50%。
+
+## 特性
+
+- 用法上和redux类似，使用connect包裹pageconfig。connect的两个主要参数为mapStateToData、mapDispatchToPage；
+- setdata节流：每次store变化并不一定会同步写到页面的Data上（也不一定实时渲染），默认会异步（debounce）100ms，可以关闭；
+- 如果后台页面有connect变更的state，将不会实时setdata，后台页面的setdata汇总到此页面onShow时进行；
+- 支持通过action给reducer传入callback，在setdata触发后（不管同步还是异步）执行；
+- connect的传参mapStateToData，支持传入options（即onLoad的options）；
+- connect新增参数mergeProps（对mapStateToData的返回结果做进一步处理）；
+- connect新增参数extraOptions（给mergeProps方法传参）；
+
+
+## 联系我们
+
+<Image src="https://p1.meituan.net/scarlett/6932c51530bd79fe4d77ca1304d162fe51805.jpg" width={300} />

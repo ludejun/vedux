@@ -1,0 +1,35 @@
+---
+name: API
+route: /api
+fullpage: false
+---
+
+# API
+
+vedux的API整体上比较简单，具体使用示例详见高级使用。主要分为三部分：connect参数、reducer返回的state可以多加options、Provider：
+
+### 1. connect
+
+|参数|类型|是否必填|说明|
+| ---- | ---- | ---- | ---- |
+|mapStateToData|Function|否|页面需要的store数据，似redux connect的mapStateToProps。函数可以两个参数，第一个为需要的state，第二个为onLoad的options，支持拿schema中的数据在此函数中做运算|
+|mapDispatchToPage|Function|否|绑定页面要用的action creator，同redux connect的mapDispatchToProps|
+|mergeProps|Function|否|对mapStateToData的返回结果做进一步处理的函数，似redux connect的mergeProps。函数可以三个参数，详见高级使用注释|
+|extraOptions|Object|否|给mergeProps方法传参|
+
+### 2. reducer
+
+|属性|类型|是否必填|说明|
+| ---- | ---- | ---- | ---- |
+|[CONST.VEDUX_CB]|Function|否|store变化后页面刷新后（setdata）的回调，不管是同步还是异步|
+|[CONST.VEDUX_OPTS]|Object|否|可以控制此次store变化导致的页面setdata是同步，还是debounce 100ms。如含有{lazy:false}则为同步|
+
+*注：CONST为vedux库暴露出来的常量，demo见高级使用*
+
+### 3. Provider
+
+|参数|类型|是否必填|说明|
+| ---- | ---- | ---- | ---- |
+|store|Object|是|以全局store为参数，返回一个处理appConfig的函数（此函数以appConfig为参数），见快速使用的app.js|
+
+
