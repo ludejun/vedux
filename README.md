@@ -18,8 +18,9 @@
 - connect新增参数mergeProps（对mapStateToData的返回结果做进一步处理）；
 - connect新增参数extraOptions（给mergeProps方法传参）；
 
-**有以下注意点：
-- Store.getState()中某个状态的属性值禁止为Set, WeakSet, Map, WeakMap, Symbol类型。不然将分辨不出有state变化**
+##### 有以下注意点：
+
+- Store.getState()中某个状态的属性值禁止为Set, WeakSet, Map, WeakMap, Symbol类型。不然将分辨不出有state变化
 - 每一个dispatch的action默认都为异步100ms执行，合理节流。当有某些操作后，有立即执行并且依赖前一个操作的，可以将此action变为同步执行，{lazy: false}，详见下方示例。
 - store中存储的state值，应保持为基础类型或object，且state的值不应过大
 
@@ -137,7 +138,7 @@ export default function user(state = initialState, action = {}) {
 }
 ```
 
-####最后
+#### 最后
 
 这样redux数据流就跑下来了，可以通过绑定在app上的store来控制全局状态的页面更新，通过mapStateToData可以将变化之后的state打到页面的data中，并自动让页面刷新。dispatch导致的页面data变化默认不是同步的。当然也有些场景，比如登录后，dispatch必须为同步可以参考后续API文档或者高阶使用文档。
 
