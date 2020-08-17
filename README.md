@@ -27,7 +27,7 @@
 ### 快速接入
 
 ```shell
-yarn add @wmfe/vedux
+yarn add vedux
 ```
 
 安装之后：
