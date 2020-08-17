@@ -1,6 +1,6 @@
 {
-  "name": "@wmfe/vedux",
-  "version": "0.1.4",
+  "name": "vedux",
+  "version": "0.1.5",
   "description": "Provide redux in weapp. Less count of setdata in weapp.",
   "main": "src/index.js",
   "scripts": {
