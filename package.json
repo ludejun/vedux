@@ -1,8 +1,8 @@
 {
   "name": "vedux",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Provide redux in weapp. Less count of setdata in weapp.",
-  "main": "src/index.js",
+  "main": "libs/vedux.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.babel.js",
